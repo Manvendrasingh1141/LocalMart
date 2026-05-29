@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    background-color: theme('colors.background');
+    color: theme('colors.on-background');
+    font-family: theme('fontFamily.body-md');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .saffron-gradient {
+    background: radial-gradient(circle at top left, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%);
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+  }
+}
