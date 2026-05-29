@@ -18,7 +18,7 @@ const server = http.createServer(app);
 // Socket.io initialization
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   },
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: true,
     credentials: true,
   })
 );
@@ -69,3 +69,5 @@ process.on('unhandledRejection', (err, promise) => {
   // Close server & exit process
   server.close(() => process.exit(1));
 });
+
+module.exports = app;
