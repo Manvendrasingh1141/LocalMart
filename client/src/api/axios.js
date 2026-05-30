@@ -1,8 +1,24 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
+// Determine API URL based on environment
+const getApiUrl = () => {
+  // If explicitly set in env, use it (for development)
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  
+  // For production (Vercel), use the production server
+  if (import.meta.env.PROD) {
+    return 'https://server-virid-nine.vercel.app/api';
+  }
+  
+  // For local development
+  return 'http://localhost:5001/api';
+};
+
 const api = axios.create({
-      baseURL: import.meta.env.VITE_API_URL || 'https://server-virid-nine.vercel.app/api',
+  baseURL: getApiUrl(),
   withCredentials: true, // Send cookies for refresh token
 });
 
@@ -25,8 +41,9 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
+        const apiUrl = getApiUrl();
         const { data } = await axios.post(
-          `${import.meta.env.VITE_API_URL || 'https://server-virid-nine.vercel.app/api'}/auth/refresh`,
+          `${apiUrl}/auth/refresh`,
           {},
           { withCredentials: true }
         );
