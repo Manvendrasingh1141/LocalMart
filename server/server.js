@@ -18,7 +18,7 @@ const server = http.createServer(app);
 // Socket.io initialization
 const io = new Server(server, {
   cors: {
-    origin: true,
+    origin: [process.env.CLIENT_URL, 'http://localhost:5173', 'http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   },
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: true,
+    origin: [process.env.CLIENT_URL, 'http://localhost:5173', 'http://localhost:3000'],
     credentials: true,
   })
 );
